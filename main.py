@@ -2,6 +2,7 @@ import numpy as np
 import json
 import sys
 import csv
+import random
 
 command_inputs = list(sys.argv)
 input_data = command_inputs[1]
@@ -31,3 +32,21 @@ print(weights)
 
 #TODO: stochastic gradient descent
 
+def stoch_grad_descent(iters, learn_rate, x_data, y_data):
+    # initialize weights vector as vector of zeros
+    x_data = np.array(x_data)
+    y_data = np.array(y_data)
+    w_i = np.zeros((x_data.shape[1], 1))
+
+    iters = 500000
+
+    while iters > 0:
+        i = random.randint(0, x_data.shape[1])
+        X = x_data[i].reshape(1, x_data.shape[1])
+        Y = y_data[i].reshape(1,1)
+        w_i = w_i - learn_rate*np.dot(X.T, (np.dot(X, w_i) - Y))
+        iters -= 1
+    return w_i
+
+sgd = stoch_grad_descent(iterations, learning_rate, x_vectors, y_labels)
+print(sgd)
